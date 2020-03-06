@@ -30,15 +30,17 @@ RUN php -r "if (hash_file('sha384', 'composer-setup.php') === 'e0012edf3e80b6978
 RUN php composer-setup.php --install-dir=/usr/local/bin --filename=composer
 RUN php -r "unlink('composer-setup.php');"
 
-# Install Concrete
-RUN cd /app && runuser app -c "composer create-project -n concrete5/concrete5:8.5.2 /tmp/app"
-RUN rsync -av /tmp/app/ /app/
-
 # Copy required files
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY start.sh /usr/local/bin/appstart
 
 RUN chmod a+x /usr/local/bin/appstart
+
+USER app
+
+# Install Concrete
+RUN cd /app && composer create-project -n concrete5/concrete5:8.5.2 /tmp/app
+RUN rsync -av /tmp/app/ /app/
 
 # Stick it in my pipe and smoke it
 CMD ["appstart"]

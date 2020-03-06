@@ -1,9 +1,5 @@
 #!/bin/bash
 
-# Update app user and group ID to prevent permissions issues
-usermod -u $APP_UID app
-usermod -g $APP_GID app
-
 # Wait for database to become available
 until nc -z -v -w30 ${C5_DB_HOST} 3306
 do
@@ -17,7 +13,7 @@ INSTALLED=$(/app/concrete/bin/concrete5 c5:info | grep Installed | cut -d' ' -f 
 
 if [ $INSTALLED = "No" ]
 then
-    runuser app -c "/app/concrete/bin/concrete5 c5:install \
+    /app/concrete/bin/concrete5 c5:install \
         --db-server=$C5_DB_HOST \
         --db-username=$C5_DB_USER \
         --db-password=$C5_DB_PASSWORD \
@@ -26,7 +22,7 @@ then
         --starting-point=$C5_THEME \
         --admin-email=$C5_ADMIN_EMAIL \
         --admin-password=$C5_ADMIN_PASSWORD \
-        --site-locale=$C5_LOCALE"
+        --site-locale=$C5_LOCALE
 fi
 
 # Start da ting

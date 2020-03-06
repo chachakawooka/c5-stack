@@ -1,0 +1,6 @@
+version: '3'
+services:
+  app:
+    image: c5:8.5.2
+    build:
+      context: docker
