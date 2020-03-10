@@ -14,6 +14,7 @@ INSTALLED=$(/app/concrete/bin/concrete5 c5:info | grep Installed | cut -d' ' -f 
 if [ $INSTALLED = "No" ]
 then
     /app/concrete/bin/concrete5 c5:install \
+        --allow-as-root \
         --db-server=$C5_DB_HOST \
         --db-username=$C5_DB_USER \
         --db-password=$C5_DB_PASSWORD \
@@ -24,6 +25,9 @@ then
         --admin-password=$C5_ADMIN_PASSWORD \
         --site-locale=$C5_LOCALE
 fi
+
+chown -R www-data:www-data /app/application/config/generated_overrides /app/application/files /app/application/config/doctrine
+chmod -R a+rwX /app/application
 
 # Start da ting
 /usr/bin/supervisord -c /etc/supervisor/conf.d/supervisord.conf

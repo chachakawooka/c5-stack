@@ -18,7 +18,7 @@ services:
   app:
     image: c5:8.5.2
     volumes:
-      - generated:/app/application/config/generated_overrides
+      - config:/app/application/config
       - ./application/themes:/app/application/themes
     restart: on-failure:5
     env_file:
@@ -30,5 +30,5 @@ services:
     networks:
       - default
 volumes:
-  generated: {}
+  config: {}
   db: {}

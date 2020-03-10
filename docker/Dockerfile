@@ -21,8 +21,8 @@ RUN apt-get update && apt-get install -y \
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
 RUN docker-php-ext-install gd zip pdo pdo_mysql
 
-# Add app user
-RUN adduser --shell /bin/bash --home /app app
+RUN usermod --shell /bin/bash www-data
+RUN mv /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
 
 # Install Composer
 RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -33,14 +33,14 @@ RUN php -r "unlink('composer-setup.php');"
 # Copy required files
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY start.sh /usr/local/bin/appstart
+COPY nginx.conf /etc/nginx/sites-enabled/default
 
 RUN chmod a+x /usr/local/bin/appstart
 
-USER app
-
 # Install Concrete
-RUN cd /app && composer create-project -n concrete5/concrete5:8.5.2 /tmp/app
+RUN composer create-project -n concrete5/concrete5:8.5.2 /tmp/app
 RUN rsync -av /tmp/app/ /app/
+RUN chown -R www-data:www-data /app
 
 # Stick it in my pipe and smoke it
 CMD ["appstart"]
