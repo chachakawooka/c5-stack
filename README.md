@@ -1,6 +1,9 @@
 # HALP!!!
 ![HALP!!!](https://media3.giphy.com/media/zLBQYkwGGQdJC/giphy.gif?cid=5a38a5a26b4924cbc1f61182b3015727d0166665babfd876&rid=giphy.gif)
 
+## Configuration
+Use the environment file sample to create your own. Most likely you can just copy it verbatim.
+
 ## Starting
 From a terminal, run
 

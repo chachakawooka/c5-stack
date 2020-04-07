@@ -17,6 +17,8 @@ services:
       - 3306
   app:
     image: c5:8.5.2
+    build:
+      context: ./docker
     volumes:
       - config:/app/application/config
       - ./application/themes:/app/application/themes
