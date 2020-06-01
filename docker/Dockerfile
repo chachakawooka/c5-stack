@@ -48,3 +48,4 @@ RUN chown -R www-data:www-data /app
 
 # Stick it in my pipe and smoke it
 CMD ["appstart"]
+HEALTHCHECK --timeout=10s CMD curl --silent --fail http://127.0.0.1:80
