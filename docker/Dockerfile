@@ -41,7 +41,7 @@ COPY nginx.conf /etc/nginx/sites-enabled/default
 RUN chmod a+x /usr/local/bin/appstart
 
 # Install Concrete
-RUN composer create-project -n concrete5/concrete5:8.5.2 /tmp/app
+RUN composer create-project -n concrete5/concrete5:8.5.4 /tmp/app
 RUN rsync -av /tmp/app/ /app/
 RUN rm -rf /tmp/app
 RUN chown -R www-data:www-data /app
