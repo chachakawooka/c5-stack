@@ -17,9 +17,6 @@ services:
       - 3306
   app:
     image: chachakawooka/c5-stack:8.5.4
-    build:
-      context: ./
-      dockerfile: Dockerfile
     volumes:
       - ./application:/app/application
       - ./packages:/app/packages
