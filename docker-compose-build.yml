@@ -1,6 +1,6 @@
-version: '3'
+version: "3"
 services:
   app:
-    image: c5:8.5.2
+    image: chachakawooka/c5-stack:9.1.1
     build:
       context: docker

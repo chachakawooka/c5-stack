@@ -15,11 +15,12 @@ RUN apt-get update && apt-get install -y \
     netcat \
     libzip-dev \
     libjpeg-dev \
-    libfreetype6-dev
+    libfreetype6-dev \
+    libicu-dev
 
 # Install required PHP extensions
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg
-RUN docker-php-ext-install gd zip pdo pdo_mysql
+RUN docker-php-ext-install gd zip pdo pdo_mysql intl
 
 RUN usermod --shell /bin/bash www-data
 RUN mv /usr/local/etc/php/php.ini-development /usr/local/etc/php/php.ini
@@ -41,7 +42,7 @@ COPY nginx.conf /etc/nginx/sites-enabled/default
 RUN chmod a+x /usr/local/bin/appstart
 
 # Install Concrete
-RUN composer create-project -n concrete5/concrete5:8.5.4 /tmp/app
+RUN composer create-project -n concrete5/concrete5:9.1.1 /tmp/app
 RUN rsync -av /tmp/app/ /app/
 RUN rm -rf /tmp/app
 RUN chown -R www-data:www-data /app
